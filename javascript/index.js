@@ -1,60 +1,55 @@
-const rock_computer = document.querySelector(".rock_computer")
-const paper_computer = document.querySelector(".paper_computer")
-const scissors_computer = document.querySelector(".scissors_computer")
+const buttons = document.querySelectorAll(".user_choice")
+let user_score = 0;
 
-function generateCompChoice()
+const comp_choices = document.querySelectorAll("button")
+let comp_score = 0;
+
+const title = document.querySelector("h1")
+
+const scores = document.querySelectorAll("h4")
+
+function generateRandomChoice(userChoice)
 {
-    const ran = Math.floor(Math.random() * 3) + 1
-    switch(ran)
+    let ran = Math.floor(Math.random() * 3)
+    
+    comp_choices[ran + 3].classList.add("active")
+    setTimeout(function() {
+        comp_choices[ran + 3].classList.remove("active")
+    }, 500)
+
+    let beats = userChoice - 1
+    if (beats < 0)
+        beats = 2
+    let looses = userChoice + 1
+    if (looses > 2)
+        looses = 0
+    if (ran == beats)
     {
-        case 1:
-            rock_computer.style.backgroundColor = "blue"
-            setTimeout(function() {
-                rock_computer.style.backgroundColor = "";
-            }, 500)
-            break
-        case 2:
-            paper_computer.style.backgroundColor = "blue"
-            setTimeout(function() {
-                paper_computer.style.backgroundColor = "";
-            }, 500)
-            break
-        case 3:
-            scissors_computer.style.backgroundColor = "blue"
-            setTimeout(function() {
-                scissors_computer.style.backgroundColor = "";
-            }, 500)
-            break
+        title.textContent = "Player Wins!"
+        user_score++;
+    } else if(ran == looses)
+    {
+        title.textContent = "Computer Wins!"
+        comp_score++;
+    } else {
+        title.textContent = "Draw!"
     }
+    scores[0].textContent = "Score: " + user_score
+    scores[1].textContent = "Score: " + comp_score
+
 }
 
-const rock = document.querySelector(".rock_player")
-
-rock.addEventListener("click", (event) => {
-    rock.style.backgroundColor = "red";
-    setTimeout(function() {
-        rock.style.backgroundColor = "";
-    }, 500)
-    generateCompChoice()
+buttons[0].addEventListener("click", function() {
+    let user_choice = 0;
+    generateRandomChoice(user_choice)
 })
 
-const paper = document.querySelector(".paper_player")
-
-paper.addEventListener("click", (event) => {
-    paper.style.backgroundColor = "red";
-    setTimeout(function() {
-        paper.style.backgroundColor = "";
-    }, 500)
-    generateCompChoice()
+buttons[1].addEventListener("click", function() {
+    let user_choice = 1;
+    generateRandomChoice(user_choice)
 })
 
-const scissors = document.querySelector(".scissors_player")
-
-scissors.addEventListener("click", (event) => {
-    scissors.style.backgroundColor = "red";
-    setTimeout(function() {
-        scissors.style.backgroundColor = "";
-    }, 500)
-    generateCompChoice()
+buttons[2].addEventListener("click", function() {
+    let user_choice = 2;
+    generateRandomChoice(user_choice)
 })
-
